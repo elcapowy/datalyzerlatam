@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datalyzer — SPC y control de calidad por vertical industrial LATAM</title>
+<meta name="description" content="Plataforma SPC industrial. 6 verticales: alimentos, químicos, farma, aseo, manufactura, empaque. Reduce rechazos, cumple normas, exporta más.">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body data-screen-label="Hub">
+
+<!-- ════════ NAV ════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">D</span>
+      Datalyzer
+    </a>
+    <div class="nav-links">
+      <a href="#verticales" class="nav-link">Verticales</a>
+      <a href="#producto" class="nav-link">Producto</a>
+      <a href="#integraciones" class="nav-link">Integraciones</a>
+      <a href="#roi" class="nav-link">ROI</a>
+      <a href="#contacto" class="nav-link">Contacto</a>
+    </div>
+    <a href="#contacto" class="btn btn-ink btn-sm">
+      Agendar demo
+      <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- ════════ HERO ════════ -->
+<header class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="shell">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="eyebrow fade-up"><span class="pulse"></span> Plataforma SPC · 40+ años · LATAM</div>
+        <h1 class="h-display fade-up">Control de calidad <em>industrial</em>,<br>especializado por vertical.</h1>
+        <p class="lead fade-up">Cada industria habla un idioma distinto. Datalyzer entrega SPC, compliance y dashboards listos para tu nicho — para que reduzcas rechazos, cumplas normas y exportes más sin pelear con el software.</p>
+        <div class="btn-row fade-up">
+          <a href="#verticales" class="btn btn-primary">
+            Elegir mi vertical
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#contacto" class="btn btn-ghost">Ver demo en vivo</a>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <div class="hero-meta-num mono">4 000<span>+</span></div>
+            <div class="hero-meta-lbl">Empresas</div>
+          </div>
+          <div class="hero-meta-item">
+            <div class="hero-meta-num mono">50<span>+</span></div>
+            <div class="hero-meta-lbl">Países</div>
+          </div>
+          <div class="hero-meta-item">
+            <div class="hero-meta-num mono">40<span>+</span></div>
+            <div class="hero-meta-lbl">Años</div>
+          </div>
+          <div class="hero-meta-item">
+            <div class="hero-meta-num mono">4.8<span>/5</span></div>
+            <div class="hero-meta-lbl">Capterra</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard live -->
+      <div class="hero-dash fade-up" aria-hidden="true">
+        <div class="dash-head">
+          <div class="dash-tabs" data-tabs>
+            <button class="dash-tab is-active" data-tab>Control X̄-R</button>
+            <button class="dash-tab" data-tab>Capability</button>
+            <button class="dash-tab" data-tab>Pareto</button>
+          </div>
+          <div class="dash-status"><span class="led"></span> Stream live</div>
+        </div>
+        <div class="dash-kpis" data-live-kpis>
+          <div class="dash-kpi"><div class="dash-kpi-lbl mono" data-l>Cpk</div><div class="dash-kpi-val mono" data-v>1.42</div><div class="dash-kpi-delta mono" data-d>+0.08</div></div>
+          <div class="dash-kpi"><div class="dash-kpi-lbl mono" data-l>Media</div><div class="dash-kpi-val mono" data-v>49.8</div><div class="dash-kpi-delta mono" data-d>stable</div></div>
+          <div class="dash-kpi"><div class="dash-kpi-lbl mono" data-l>σ</div><div class="dash-kpi-val mono" data-v>5.7</div><div class="dash-kpi-delta mono" data-d>-0.3</div></div>
+          <div class="dash-kpi"><div class="dash-kpi-lbl mono" data-l>Yield</div><div class="dash-kpi-val mono" data-v>99.3%</div><div class="dash-kpi-delta mono" data-d>+0.4</div></div>
+        </div>
+        <div class="dash-chart">
+          <canvas data-spc-chart></canvas>
+        </div>
+        <div class="dash-foot">
+          <div class="legend">
+            <span><span class="swatch"></span> Medición</span>
+            <span><span class="swatch dashed"></span> UCL / LCL ±3σ</span>
+          </div>
+          <span>Línea L-4 · Embotellado · ms: <span class="mono">280</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ════════ TRUST MARQUEE ════════ -->
+<section class="trust" aria-label="Industrias que ya usan Datalyzer">
+  <div class="trust-inner">
+    <span class="trust-label"><span class="pulse" style="width:6px;height:6px;border-radius:999px;background:var(--accent);display:inline-block"></span> Operando en plantas de</span>
+    <div class="trust-marquee">
+      <div class="trust-track">
+        <span class="trust-logo">Logo Cliente 01</span>
+        <span class="trust-logo">Logo Cliente 02</span>
+        <span class="trust-logo">Logo Cliente 03</span>
+        <span class="trust-logo">Logo Cliente 04</span>
+        <span class="trust-logo">Logo Cliente 05</span>
+        <span class="trust-logo">Logo Cliente 06</span>
+        <span class="trust-logo">Logo Cliente 07</span>
+        <span class="trust-logo">Logo Cliente 08</span>
+        <!-- duplicate for seamless loop -->
+        <span class="trust-logo">Logo Cliente 01</span>
+        <span class="trust-logo">Logo Cliente 02</span>
+        <span class="trust-logo">Logo Cliente 03</span>
+        <span class="trust-logo">Logo Cliente 04</span>
+        <span class="trust-logo">Logo Cliente 05</span>
+        <span class="trust-logo">Logo Cliente 06</span>
+        <span class="trust-logo">Logo Cliente 07</span>
+        <span class="trust-logo">Logo Cliente 08</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ VERTICALES ════════ -->
+<section id="verticales" class="section">
+  <div class="shell">
+    <div class="section-head fade-up">
+      <div class="eyebrow"><span class="pulse"></span> Verticales</div>
+      <h2 class="h-title">Tu industria. Tu configuración. Listo para producción.</h2>
+      <p class="lead">6 verticales con normativas, métricas y dashboards ya parametrizados. Sin consultoría de 6 meses para empezar.</p>
+    </div>
+
+    <div class="v-grid">
+      <!-- Alimentos -->
+      <a class="v-card fade-up" href="alimentos.html" style="--card-accent: oklch(0.58 0.14 150); --card-soft: oklch(0.96 0.04 150)">
+        <div class="v-card-img">
+          <span class="v-card-tag">Alimentos</span>
+          <img src="assets/img/alimentos.jpg" alt="Planta de alimentos" loading="lazy">
+        </div>
+        <div class="v-card-body">
+          <div>
+            <div class="v-card-title">Alimentos & Bebidas</div>
+            <div class="v-card-sub mono">HACCP · ISO 22000 · FSSC</div>
+          </div>
+          <p class="v-card-desc">Variabilidad de ingredientes, temperatura y peso bajo SPC en tiempo real. Lotes rechazados al mínimo.</p>
+          <div class="v-card-stats">
+            <div class="stat-cell"><div class="stat-val mono positive">−75%</div><div class="stat-lbl">Rechazos</div></div>
+            <div class="stat-cell"><div class="stat-val mono">+45%</div><div class="stat-lbl">Export</div></div>
+            <div class="stat-cell"><div class="stat-val mono">100%</div><div class="stat-lbl">Trazable</div></div>
+          </div>
+        </div>
+        <div class="v-card-cta">
+          Ver vertical
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <!-- Químicos -->
+      <a class="v-card fade-up" href="quimicos.html" style="--card-accent: oklch(0.62 0.14 60); --card-soft: oklch(0.96 0.04 60)">
+        <div class="v-card-img">
+          <span class="v-card-tag">Químicos</span>
+          <img src="assets/img/quimicos.jpg" alt="Planta química" loading="lazy">
+        </div>
+        <div class="v-card-body">
+          <div>
+            <div class="v-card-title">Químicos</div>
+            <div class="v-card-sub mono">REACH · GHS · ISO 9001</div>
+          </div>
+          <p class="v-card-desc">Exactitud de fórmulas ±0.5%, viscosidad y pH controlados. Análisis en 30 min, no en 2 días.</p>
+          <div class="v-card-stats">
+            <div class="stat-cell"><div class="stat-val mono positive">8→1</div><div class="stat-lbl">Lotes/mes</div></div>
+            <div class="stat-cell"><div class="stat-val mono">$80k</div><div class="stat-lbl">Ahorro/mes</div></div>
+            <div class="stat-cell"><div class="stat-val mono">30 m</div><div class="stat-lbl">Análisis</div></div>
+          </div>
+        </div>
+        <div class="v-card-cta">
+          Ver vertical
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <!-- Farmacéutica -->
+      <a class="v-card fade-up" href="farmaceutica.html" style="--card-accent: oklch(0.55 0.14 230); --card-soft: oklch(0.96 0.04 230)">
+        <div class="v-card-img">
+          <span class="v-card-tag">Farmacéutica</span>
+          <img src="assets/img/laboratorio.jpg" alt="Laboratorio farmacéutico" loading="lazy">
+        </div>
+        <div class="v-card-body">
+          <div>
+            <div class="v-card-title">Farmacéutica</div>
+            <div class="v-card-sub mono">FDA · ANMAT · EMA · 21 CFR 11</div>
+          </div>
+          <p class="v-card-desc">21 CFR Part 11, APQP, historial inmutable. La auditoría deja de ser un proyecto.</p>
+          <div class="v-card-stats">
+            <div class="stat-cell"><div class="stat-val mono positive">−70%</div><div class="stat-lbl">Auditorías</div></div>
+            <div class="stat-cell"><div class="stat-val mono">100%</div><div class="stat-lbl">Compliance</div></div>
+            <div class="stat-cell"><div class="stat-val mono">0</div><div class="stat-lbl">Recalls</div></div>
+          </div>
+        </div>
+        <div class="v-card-cta">
+          Ver vertical
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <!-- Aseo & Cosmética -->
+      <a class="v-card fade-up" href="aseo.html" style="--card-accent: oklch(0.62 0.14 350); --card-soft: oklch(0.96 0.04 350)">
+        <div class="v-card-img">
+          <span class="v-card-tag">Aseo · Cosmética</span>
+          <img src="assets/img/belleza.jpg" alt="Aseo y cosmética" loading="lazy">
+        </div>
+        <div class="v-card-body">
+          <div>
+            <div class="v-card-title">Aseo & Cosmética</div>
+            <div class="v-card-sub mono">ISO 22716 · BPM · color/viscosidad</div>
+          </div>
+          <p class="v-card-desc">Color y viscosidad consistentes lote a lote. Devoluciones reducidas a una décima parte.</p>
+          <div class="v-card-stats">
+            <div class="stat-cell"><div class="stat-val mono positive">−90%</div><div class="stat-lbl">Devoluciones</div></div>
+            <div class="stat-cell"><div class="stat-val mono">+92%</div><div class="stat-lbl">CSAT</div></div>
+            <div class="stat-cell"><div class="stat-val mono">5 m</div><div class="stat-lbl">Análisis</div></div>
+          </div>
+        </div>
+        <div class="v-card-cta">
+          Ver vertical
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <!-- Manufactura -->
+      <a class="v-card fade-up" href="manufactura.html" style="--card-accent: oklch(0.58 0.14 35); --card-soft: oklch(0.96 0.04 35)">
+        <div class="v-card-img">
+          <span class="v-card-tag">Manufactura</span>
+          <img src="assets/img/industrial.jpg" alt="Planta industrial" loading="lazy">
+        </div>
+        <div class="v-card-body">
+          <div>
+            <div class="v-card-title">Manufactura Industrial</div>
+            <div class="v-card-sub mono">IATF 16949 · ISO 9001 · OEE</div>
+          </div>
+          <p class="v-card-desc">SPC multivariable, OEE en vivo y predictivo. De 1% a 0.01% de defectos, recalls evitados.</p>
+          <div class="v-card-stats">
+            <div class="stat-cell"><div class="stat-val mono positive">0.01%</div><div class="stat-lbl">Defectos</div></div>
+            <div class="stat-cell"><div class="stat-val mono">88%</div><div class="stat-lbl">OEE</div></div>
+            <div class="stat-cell"><div class="stat-val mono">$200k</div><div class="stat-lbl">Recall</div></div>
+          </div>
+        </div>
+        <div class="v-card-cta">
+          Ver vertical
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <!-- Empaque -->
+      <a class="v-card fade-up" href="empaque.html" style="--card-accent: oklch(0.55 0.14 285); --card-soft: oklch(0.96 0.04 285)">
+        <div class="v-card-img">
+          <span class="v-card-tag">Empaque</span>
+          <img src="assets/img/empaque.jpg" alt="Línea de empaque" loading="lazy">
+        </div>
+        <div class="v-card-body">
+          <div>
+            <div class="v-card-title">Empaque</div>
+            <div class="v-card-sub mono">ISO 10149 · Leak test · grosor</div>
+          </div>
+          <p class="v-card-desc">Grosor de película, resistencia y hermeticidad bajo control. Merma de material reducida diez veces.</p>
+          <div class="v-card-stats">
+            <div class="stat-cell"><div class="stat-val mono positive">0.3%</div><div class="stat-lbl">Merma</div></div>
+            <div class="stat-cell"><div class="stat-val mono">$150k</div><div class="stat-lbl">Ahorro/año</div></div>
+            <div class="stat-cell"><div class="stat-val mono">±0.01</div><div class="stat-lbl">Precisión</div></div>
+          </div>
+        </div>
+        <div class="v-card-cta">
+          Ver vertical
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PRODUCT / INTEGRATIONS ════════ -->
+<section id="integraciones" class="section">
+  <div class="shell">
+    <div class="section-head center fade-up">
+      <div class="eyebrow" style="justify-content:center"><span class="pulse"></span> Producto · Integraciones</div>
+      <h2 class="h-title">Conecta tu planta en horas, no en meses.</h2>
+      <p class="lead">SCADA, ERP, MES, balanzas, sensores y laboratorios — todo entra a un mismo motor SPC.</p>
+    </div>
+
+    <div class="integ fade-up">
+      <div class="integ-copy">
+        <div class="eyebrow mono">36+ integraciones nativas</div>
+        <h3>De la balanza al gerente, sin Excel intermedio.</h3>
+        <p class="lead">Datalyzer se conecta a tus instrumentos y sistemas existentes. Los datos fluyen, los reportes se arman solos, las desviaciones disparan alertas — todo sin tocar tu stack.</p>
+        <div class="integ-tags">
+          <span class="integ-tag">REST API</span>
+          <span class="integ-tag">OPC-UA</span>
+          <span class="integ-tag">MQTT</span>
+          <span class="integ-tag">Modbus TCP</span>
+          <span class="integ-tag">CSV / Excel</span>
+          <span class="integ-tag">SQL Direct</span>
+        </div>
+      </div>
+      <div class="integ-grid" aria-hidden="true">
+        <div class="integ-cell">SAP</div>
+        <div class="integ-cell">Oracle</div>
+        <div class="integ-cell">Dynamics</div>
+        <div class="integ-cell">Tulip</div>
+        <div class="integ-cell">Mettler<br>Toledo</div>
+        <div class="integ-cell">Ohaus</div>
+        <div class="integ-cell">Sartorius</div>
+        <div class="integ-cell">A&D</div>
+        <div class="integ-cell">Ignition</div>
+        <div class="integ-cell is-core">Datalyzer</div>
+        <div class="integ-cell">Wonderware</div>
+        <div class="integ-cell">FactoryTalk</div>
+        <div class="integ-cell">Mitutoyo</div>
+        <div class="integ-cell">Keyence</div>
+        <div class="integ-cell">Cognex</div>
+        <div class="integ-cell">+22 más</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ════════ ROI CALCULATOR ════════ -->
+<section id="roi" class="section">
+  <div class="shell">
+    <div class="section-head center fade-up">
+      <div class="eyebrow" style="justify-content:center"><span class="pulse"></span> Calculadora de ROI</div>
+      <h2 class="h-title">Cuánto te cuesta no usar Datalyzer.</h2>
+      <p class="lead">Cargá tu volumen y tasa de rechazo actual. Calculamos tu ahorro anual estimado en 5 segundos.</p>
+    </div>
+
+    <div class="roi fade-up" data-roi data-vertical="default">
+      <div class="roi-inputs">
+        <div class="roi-field">
+          <label>Lotes producidos por mes</label>
+          <div class="roi-input-wrap">
+            <input type="number" min="0" data-roi-batches value="40">
+            <span class="suffix">lotes/mes</span>
+          </div>
+        </div>
+        <div class="roi-field">
+          <label>Valor promedio por lote</label>
+          <div class="roi-input-wrap">
+            <span class="prefix">USD</span>
+            <input type="number" min="0" data-roi-value value="40000">
+          </div>
+        </div>
+        <div class="roi-field">
+          <label>Tasa de rechazo actual · <span data-roi-reject-out>12%</span></label>
+          <input type="range" min="1" max="30" step="1" data-roi-reject value="12" class="roi-slider">
+        </div>
+
+        <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--border); font-family:var(--font-mono); font-size:11px; color:var(--ink-3); text-transform:uppercase; letter-spacing:0.08em">
+          Cálculo conservador · referencia interna Datalyzer
+        </div>
+      </div>
+      <div class="roi-output">
+        <div class="roi-eyebrow mono">Ahorro estimado anual</div>
+        <div class="roi-headline mono"><span class="currency">USD </span><span data-roi-savings>$0</span></div>
+        <div class="roi-sub">Combinando recuperación de lotes rechazados + aumento de exportación habilitado por certificaciones.</div>
+        <div class="roi-breakdown">
+          <div>
+            <div class="lbl mono">Lotes recuperados</div>
+            <div class="val mono"><span data-roi-recovered>$0</span></div>
+          </div>
+          <div>
+            <div class="lbl mono">Export adicional</div>
+            <div class="val mono"><span data-roi-export>$0</span></div>
+          </div>
+          <div>
+            <div class="lbl mono">Payback estimado</div>
+            <div class="val mono"><span data-roi-payback>—</span></div>
+          </div>
+          <div>
+            <div class="lbl mono">Confianza</div>
+            <div class="val mono">Alta</div>
+          </div>
+        </div>
+        <a href="#contacto" class="btn btn-primary" style="margin-top:8px; align-self:flex-start">
+          Quiero ver mi cálculo real
+          <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ COMPLIANCE STRIP ════════ -->
+<section class="section-tight">
+  <div class="shell">
+    <div class="section-head fade-up">
+      <div class="eyebrow"><span class="pulse"></span> Compliance</div>
+      <h2 class="h-section">Sellos y normas soportadas de fábrica.</h2>
+    </div>
+    <div class="badges fade-up">
+      <span class="badge mono">FDA 21 CFR Part 11</span>
+      <span class="badge mono">ISO 9001:2015</span>
+      <span class="badge mono">ISO 22000</span>
+      <span class="badge mono">ISO 22716</span>
+      <span class="badge mono">IATF 16949</span>
+      <span class="badge mono">HACCP</span>
+      <span class="badge mono">GMP</span>
+      <span class="badge mono">ANMAT</span>
+      <span class="badge mono">EMA</span>
+      <span class="badge mono">FSSC 22000</span>
+      <span class="badge mono">REACH</span>
+      <span class="badge mono">GHS</span>
+      <span class="badge mono">SOC 2 Type II</span>
+    </div>
+    <div style="margin-top:32px">
+      <div class="rating">
+        <div class="rating-stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568L24 9.75l-6 5.847L19.336 24 12 19.897 4.664 24 6 15.597 0 9.75l8.332-1.595z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568L24 9.75l-6 5.847L19.336 24 12 19.897 4.664 24 6 15.597 0 9.75l8.332-1.595z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568L24 9.75l-6 5.847L19.336 24 12 19.897 4.664 24 6 15.597 0 9.75l8.332-1.595z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568L24 9.75l-6 5.847L19.336 24 12 19.897 4.664 24 6 15.597 0 9.75l8.332-1.595z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568L24 9.75l-6 5.847L19.336 24 12 19.897 4.664 24 6 15.597 0 9.75l8.332-1.595z"/></svg>
+        </div>
+        <div class="rating-text"><strong>4.8 / 5</strong> · 218 reseñas verificadas en Capterra</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FINAL CTA ════════ -->
+<section id="contacto" class="section">
+  <div class="shell">
+    <div class="cta-block fade-up">
+      <div>
+        <div class="eyebrow mono" style="color: var(--accent)"><span class="pulse"></span> Demo personalizada</div>
+        <h2>Ponemos tu vertical en vivo en 30 minutos.</h2>
+        <p>Un experto industrial — no un vendedor — recorre con vos un dashboard con tu vertical, tus normativas y tus métricas. Sin compromiso, sin presentación de marketing.</p>
+        <div class="btn-row" style="margin-top:28px">
+          <a href="#contacto" class="btn btn-primary btn-lg">
+            Agendar 30 min
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="https://wa.me/541154797426" class="btn btn-ghost btn-lg" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.18)">WhatsApp directo</a>
+        </div>
+      </div>
+      <div class="cta-meta">
+        <div class="cta-meta-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span>Próximos slots disponibles</span>
+          <span class="mono">Hoy 16:30</span>
+        </div>
+        <div class="cta-meta-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72a2 2 0 0 1 1.72 2z"/></svg>
+          <span>Hablar con un experto</span>
+          <span class="mono">+54 11 5479 7426</span>
+        </div>
+        <div class="cta-meta-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>Por mail</span>
+          <span class="mono">mwyler@datalyzer.com</span>
+        </div>
+        <div class="cta-meta-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          <span>Tiempo de demo</span>
+          <span class="mono">≈ 30 min</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="brand"><span class="brand-mark">D</span>Datalyzer</a>
+      <p>Plataforma SPC industrial para LATAM. Control de calidad por vertical, listo para producción.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Verticales</h4>
+      <a href="alimentos.html">Alimentos & Bebidas</a>
+      <a href="quimicos.html">Químicos</a>
+      <a href="farmaceutica.html">Farmacéutica</a>
+      <a href="aseo.html">Aseo & Cosmética</a>
+      <a href="manufactura.html">Manufactura</a>
+      <a href="empaque.html">Empaque</a>
+    </div>
+    <div class="footer-col">
+      <h4>Producto</h4>
+      <a href="#integraciones">Integraciones</a>
+      <a href="#roi">Calculadora de ROI</a>
+      <a href="#producto">Cobertura LATAM</a>
+      <a href="#">Compliance</a>
+      <a href="#">Documentación</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <a href="mailto:mwyler@datalyzer.com">mwyler@datalyzer.com</a>
+      <a href="tel:+541154797426">+54 11 5479 7426</a>
+      <a href="https://www.datalyzer.com">www.datalyzer.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Datalyzer LATAM</span>
+    <span>v2.0 · Built for plant managers</span>
+  </div>
+</footer>
+
+<script src="assets/js/charts.js"></script>
+<script src="assets/js/roi.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/tweaks.js"></script>
+</body>
+</html>

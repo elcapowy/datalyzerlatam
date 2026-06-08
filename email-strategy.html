@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landing Page + Email Marketing Strategy · Datalyzer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a1a;
+    --ink-mid: #444;
+    --ink-light: #767676;
+    --accent: #1a4fa0;
+    --accent-light: #eef2fb;
+    --rule: #d8d8d0;
+    --page-bg: #f4f2ec;
+    --paper: #ffffff;
+    --tag-bg: #1a4fa0;
+    --tag-text: #fff;
+    --highlight: #fff8e6;
+    --highlight-border: #e6b800;
+  }
+
+  body {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    background: var(--page-bg);
+    padding: 48px 16px 80px;
+  }
+
+  .page {
+    max-width: 816px;
+    margin: 0 auto 40px;
+    background: var(--paper);
+    padding: 72px 80px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.09);
+    border-radius: 3px;
+  }
+
+  /* ─── Header ─── */
+  .doc-header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 28px;
+    margin-bottom: 36px;
+  }
+  .doc-meta {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 14px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .doc-meta span::before { content: '— '; }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .doc-subtitle {
+    font-size: 16px;
+    color: var(--ink-mid);
+    font-weight: 400;
+  }
+
+  /* ─── Sections ─── */
+  .section {
+    margin-bottom: 44px;
+    break-inside: avoid;
+  }
+  h2 {
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 16px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--accent-light);
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 20px 0 8px;
+    line-height: 1.3;
+  }
+  p {
+    color: var(--ink-mid);
+    margin-bottom: 12px;
+    text-wrap: pretty;
+  }
+  p:last-child { margin-bottom: 0; }
+
+  /* ─── Callout box ─── */
+  .callout {
+    background: var(--highlight);
+    border-left: 3px solid var(--highlight-border);
+    padding: 18px 22px;
+    border-radius: 2px;
+    margin: 20px 0;
+    break-inside: avoid;
+  }
+  .callout p { color: var(--ink); margin: 0; font-size: 14.5px; }
+  .callout strong { color: var(--ink); }
+
+  /* ─── Info box ─── */
+  .info-box {
+    background: var(--accent-light);
+    border: 1px solid #c5d4f0;
+    padding: 20px 24px;
+    border-radius: 3px;
+    margin: 20px 0;
+    break-inside: avoid;
+  }
+  .info-box p { color: #1a3870; margin-bottom: 8px; font-size: 14px; }
+  .info-box p:last-child { margin-bottom: 0; }
+
+  /* ─── Numbered / bullet lists ─── */
+  ol, ul {
+    padding-left: 22px;
+    margin-bottom: 12px;
+    color: var(--ink-mid);
+  }
+  ol { list-style: decimal; }
+  ul { list-style: disc; }
+  li {
+    margin-bottom: 6px;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+  li strong { color: var(--ink); }
+
+  /* ─── Step flow ─── */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 20px 0;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .step {
+    display: flex;
+    gap: 20px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--rule);
+    break-inside: avoid;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-light);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-body h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .step-body p { font-size: 13.5px; color: var(--ink-mid); margin: 0; }
+
+  /* ─── Metrics grid ─── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  .metric {
+    background: var(--paper);
+    padding: 18px 16px;
+    break-inside: avoid;
+  }
+  .metric-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .metric-label {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.4;
+  }
+
+  /* ─── Tag pills ─── */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0;
+  }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+  .tag.outline {
+    background: transparent;
+    color: var(--ink-mid);
+    border: 1px solid var(--rule);
+  }
+
+  /* ─── Two-col layout ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 20px 0;
+  }
+  .col-block {
+    break-inside: avoid;
+  }
+  .col-block h4 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .col-block ul { font-size: 13.5px; }
+
+  /* ─── Divider ─── */
+  hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 36px 0;
+  }
+
+  /* ─── Footer ─── */
+  .doc-footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .doc-footer span {
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--ink-light);
+  }
+
+  /* ─── Print ─── */
+  @media print {
+    body { background: none; padding: 0; }
+    .page { box-shadow: none; border-radius: 0; margin: 0; padding: 0; max-width: 100%; }
+    @page { margin: 0.75in; }
+    h2 { color: #1a4fa0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .callout, .info-box, .metric, .step { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="doc-header">
+    <div class="doc-meta">
+      <span>Datalyzer LATAM</span>
+      <span>Growth Strategy</span>
+      <span>June 2026</span>
+      <span>Internal Brief</span>
+    </div>
+    <h1>Dedicated Landing Page + Mass Email Marketing to Generate Qualified Leads</h1>
+    <p class="doc-subtitle">How a focused landing page on <strong>datalyzer.com</strong> — paired with a structured email outreach program — can systematically fill the sales pipeline for the LATAM region.</p>
+  </div>
+
+
+  <!-- ═══ 1. THE OPPORTUNITY ═══ -->
+  <div class="section">
+    <h2>01 · The Opportunity</h2>
+    <p>
+      Right now, <strong>datalyzer.com</strong> serves a global audience with generic messaging. LATAM prospects — quality engineers, plant managers, and compliance officers in Argentina, Colombia, Chile, Peru, and beyond — land on a page that doesn't speak their language, address their specific industry regulations (SENASA, INVIMA, ANVISA, IATF 16949 adaptations), or reflect their buying context.
+    </p>
+    <p>
+      A <strong>dedicated landing page</strong> (either a subdomain like <code>latam.datalyzer.com</code> or a standalone campaign page) combined with a <strong>mass email marketing engine</strong> creates a closed loop: prospects receive a targeted email → they land on a page built for them → they convert into a lead → the sales team receives a warm, qualified contact.
+    </p>
+    <div class="callout">
+      <p><strong>Core insight:</strong> Industrial software buyers respond to specificity. A food-industry plant manager in Montevideo converts at far higher rates when the headline says "Comply with HACCP & SENASA with SPC" than when it says "Statistical Process Control Software."</p>
+    </div>
+  </div>
+
+
+  <!-- ═══ 2. WHY A LANDING PAGE ═══ -->
+  <div class="section">
+    <h2>02 · Why a Dedicated Landing Page Changes Everything</h2>
+
+    <h3>2.1 Message-to-Market Match</h3>
+    <p>
+      Every email campaign should point to a page that mirrors the exact promise in the subject line. When a prospect clicks "Reduce scrap costs in your food plant," they expect to land on a page about food-industry SPC — not the main product homepage. A dedicated landing page ensures <strong>zero friction between the email and the conversion</strong>.
+    </p>
+
+    <h3>2.2 No Navigation Distractions</h3>
+    <p>
+      The main <code>datalyzer.com</code> site has menus, product pages, documentation, and global content — all of which pull the visitor away from the one action you want: filling out a form. A landing page strips everything except the offer and the call-to-action (CTA), which consistently <strong>increases conversion rates by 2–5×</strong> compared to sending traffic to the homepage.
+    </p>
+
+    <h3>2.3 Segmentation Capability</h3>
+    <p>
+      You can create one landing page per vertical or campaign:
+    </p>
+    <div class="tags">
+      <span class="tag">Food & Beverage</span>
+      <span class="tag">Pharma / FDA</span>
+      <span class="tag">Automotive IATF</span>
+      <span class="tag">Plastics & Packaging</span>
+      <span class="tag">Free Demo CTA</span>
+      <span class="tag">ROI Calculator</span>
+      <span class="tag">Competitor Switch</span>
+    </div>
+    <p>Each page has its own URL, its own analytics, and its own conversion rate. You can A/B test headlines, CTAs, and social proof independently — without touching the main site.</p>
+
+    <h3>2.4 SEO & Paid Traffic Synergy</h3>
+    <p>
+      These pages can be indexed by Google and targeted with paid ads (Google Ads, LinkedIn Ads) in addition to email campaigns. A page optimized for <em>"software SPC Argentina"</em> or <em>"FMEA software Colombia"</em> captures organic search traffic 24/7 — making it a multi-channel asset, not just an email destination.
+    </p>
+  </div>
+
+
+  <!-- ═══ 3. THE EMAIL MARKETING ENGINE ═══ -->
+  <div class="section">
+    <h2>03 · Building the Mass Email Marketing Engine</h2>
+
+    <h3>3.1 List Building — Who to Email</h3>
+    <p>The quality of the list is the single most important variable. There are three acquisition channels:</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">A</div>
+        <div class="step-body">
+          <h4>Intent-Based Prospecting (LinkedIn Sales Navigator / Apollo / Hunter.io)</h4>
+          <p>Filter by: Job titles (Quality Manager, QA Engineer, Plant Director, Continuous Improvement Lead) + Industries (Food, Pharma, Auto) + Country (AR, CO, CL, PE, MX, BR) + Company size (50–5,000 employees). Export verified work emails. Typical yield: 500–2,000 contacts per vertical per country.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">B</div>
+        <div class="step-body">
+          <h4>Industry Databases & Associations</h4>
+          <p>Purchase or partner with databases from IRAM (Argentina), AENOR LATAM, or food/pharma chamber directories. These contacts often have higher seniority and buying authority than scraped lists.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">C</div>
+        <div class="step-body">
+          <h4>Inbound Capture on the Landing Page Itself</h4>
+          <p>Offer a lead magnet (free ROI calculator, FMEA template pack, SPC readiness checklist) in exchange for email + role + company. These self-qualified leads are the warmest tier — prioritize them in the sales queue.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>3.2 Email Sequence — The 5-Touch Cadence</h3>
+    <p>
+      A single blast rarely converts. Industrial software requires a nurture sequence. The proven structure for this audience:
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Day 0 — The Problem Email</h4>
+          <p>Open with a pain point specific to their industry. "Food plants in Argentina are under increasing SENASA pressure for traceability. Here's how SPC solves it in 90 days." No hard sell. End with a soft CTA: "See how it works →"</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Day 3 — The Proof Email</h4>
+          <p>One customer case study. Real numbers: "A Colombian pharmaceutical manufacturer reduced nonconformities by 34% in Q1 using Datalyzer SPC." Link to the landing page with a testimonial section.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Day 7 — The Education Email</h4>
+          <p>A short, genuinely useful piece of content: "3 signs your SPC data is in spreadsheets when it shouldn't be." Builds trust. Positions Datalyzer as the expert, not just a vendor. CTA: download the full guide (gated — captures email if not already subscribed).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Day 14 — The Comparison Email</h4>
+          <p>Address the "why not Minitab / WinSPC / spreadsheets" objection directly. Frame Datalyzer's advantages: Spanish support, LATAM time zones, real-time plant floor integration, price point. Direct link to comparison landing page.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Day 21 — The Ask Email</h4>
+          <p>Clear, direct CTA: "Book a 30-minute demo with our team in Argentina — no commitment, no script." Include a Calendly link embedded in the landing page. Urgency element if applicable ("We're running a Q3 onboarding cohort — 6 spots left").</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>3.3 Technical Setup</h3>
+    <div class="two-col">
+      <div class="col-block">
+        <h4>Sending Infrastructure</h4>
+        <ul>
+          <li><strong>Platform:</strong> Instantly.ai, Lemlist, or Brevo for cold outreach; HubSpot or ActiveCampaign for warm nurturing</li>
+          <li><strong>Domain warm-up:</strong> Use a separate sending domain (e.g. <code>mail.datalyzer-latam.com</code>) to protect the main domain's reputation</li>
+          <li><strong>SPF, DKIM, DMARC:</strong> Must be configured — emails without authentication hit spam at 60–80% rate</li>
+          <li><strong>Sending limits:</strong> Start at 30–50/day per inbox, scale to 200/day after 4-week warmup</li>
+        </ul>
+      </div>
+      <div class="col-block">
+        <h4>Landing Page Tech Stack</h4>
+        <ul>
+          <li><strong>Platform:</strong> HubSpot CMS, Unbounce, or Webflow (integrates with CRM)</li>
+          <li><strong>Form tool:</strong> HubSpot Forms or Typeform — captures UTM parameters to attribute which email generated the lead</li>
+          <li><strong>Analytics:</strong> Google Analytics 4 + Hotjar (heatmaps on form area)</li>
+          <li><strong>CRM integration:</strong> Auto-create contact in HubSpot/Pipedrive on form submit; assign to LATAM rep</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ 4. LANDING PAGE ANATOMY ═══ -->
+  <div class="section">
+    <h2>04 · Anatomy of a High-Converting Landing Page</h2>
+    <p>Every campaign landing page should contain these elements, in order:</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">→</div>
+        <div class="step-body">
+          <h4>Hero — Specific Headline + Subheadline</h4>
+          <p>Lead with the outcome, not the product. Example: <em>"Cut scrap by 30% in 90 days — without replacing your ERP."</em> Subheadline: "Datalyzer SPC integrates with your existing line data and surfaces quality issues before they become nonconformances."</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">→</div>
+        <div class="step-body">
+          <h4>Lead Capture Form — Above the Fold</h4>
+          <p>Ask only for: Name, Work Email, Company, Country, Role. Each additional field reduces conversion by ~10%. The form must be the first thing visible. CTA button: "Get My Free Demo" or "Download the SPC Guide" — specific, not generic "Submit".</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">→</div>
+        <div class="step-body">
+          <h4>Trust Signals — Logos & Numbers</h4>
+          <p>"Used in 4,000+ plants across 50 countries." Show 4–6 industry logos (anonymized if needed). IATF 16949 / FDA 21 CFR / HACCP compliance badges. ISO certification mark. These remove risk perception in under 3 seconds.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">→</div>
+        <div class="step-body">
+          <h4>Pain-Benefit Section</h4>
+          <p>3 columns: each column = one pain point (left) + Datalyzer's answer (right). Example: "Scattered data in spreadsheets → Real-time SPC dashboard connected to your machines." Keep to 3 pairs max — more dilutes focus.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">→</div>
+        <div class="step-body">
+          <h4>Social Proof — One Specific Quote</h4>
+          <p>One testimonial from a LATAM customer in the same vertical as the campaign. Photo, name, title, and company. If no published testimonial exists, use: "A food manufacturer in Buenos Aires reduced audit prep time by 60%." Numbers over adjectives.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">→</div>
+        <div class="step-body">
+          <h4>FAQ — Objection Handling</h4>
+          <p>3–5 questions that the sales team hears most: "Does it integrate with SAP?", "How long does implementation take?", "Is there Spanish-language support?", "What's the pricing model?" Answering these on the page removes barriers before the demo call.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">→</div>
+        <div class="step-body">
+          <h4>Second CTA — Calendar Embed</h4>
+          <p>At the bottom: an embedded Calendly showing real available slots for the LATAM rep. Seeing open times on a calendar converts significantly better than a contact form — it makes the next step feel concrete and low-risk.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══ 5. EXPECTED METRICS ═══ -->
+  <div class="section">
+    <h2>05 · Expected Performance Benchmarks</h2>
+    <p>For B2B industrial software, targeting quality/engineering roles in LATAM, realistic benchmarks by channel:</p>
+
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value">28–42%</div>
+        <div class="metric-label">Cold email open rate (personalized, industry-specific subject line)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">4–8%</div>
+        <div class="metric-label">Click-to-landing-page rate from email</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">12–22%</div>
+        <div class="metric-label">Landing page conversion rate (form fill) for warm email traffic</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">1–3%</div>
+        <div class="metric-label">Email list to booked demo (full funnel cold)</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">15–25%</div>
+        <div class="metric-label">Demo-to-proposal conversion for qualified LATAM leads</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">~$18–45</div>
+        <div class="metric-label">Estimated cost per lead (email + landing page, no paid ads)</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Sample scenario:</strong> Send 2,000 targeted emails (food & pharma, Argentina + Colombia). At 35% open rate → 700 opens. At 6% CTR → 42 clicks to landing page. At 18% conversion → 7–8 form fills per campaign. At $30/lead → $240 total spend for 8 warm leads in 3 weeks.</p>
+      <p>At 2 campaigns/month across 3 verticals = <strong>~48 qualified leads/month</strong>. With a 20% close rate and ACV of $12,000, that's $115K ARR pipeline generated monthly from email alone.</p>
+    </div>
+  </div>
+
+
+  <!-- ═══ 6. COMPLIANCE ═══ -->
+  <div class="section">
+    <h2>06 · Compliance & Deliverability</h2>
+    <p>LATAM has varying data protection laws. Key requirements to stay compliant:</p>
+    <ul>
+      <li><strong>Argentina (PDPA / Ley 25.326):</strong> Business emails to companies are generally permissible under legitimate interest; include a clear unsubscribe link in every email.</li>
+      <li><strong>Brazil (LGPD):</strong> Requires a lawful basis for processing. Cold B2B email is permitted under legitimate interest if the content is clearly relevant to the recipient's role. Always honor opt-outs within 5 business days.</li>
+      <li><strong>Colombia (Ley 1581):</strong> Similar to GDPR-lite. B2B prospecting is allowed; maintain a suppression list and document your data sources.</li>
+      <li><strong>CAN-SPAM / CASL (for US/CA addresses):</strong> If emailing any North American contacts via the same platform, ensure full compliance (physical address in footer, working unsubscribe, no deceptive headers).</li>
+      <li><strong>Universal:</strong> Never buy lists from dubious brokers. Validate emails before sending (ZeroBounce, NeverBounce) — invalid emails above 3% will tank your sender reputation.</li>
+    </ul>
+  </div>
+
+
+  <!-- ═══ 7. INTEGRATION WITH EXISTING SITE ═══ -->
+  <div class="section">
+    <h2>07 · How This Fits Into datalyzer.com</h2>
+
+    <h3>Option A — Subdirectory (Recommended for SEO)</h3>
+    <p>Host pages at <code>datalyzer.com/latam/</code> or <code>datalyzer.com/lp/food-spc-argentina/</code>. These pages inherit the domain's authority, which boosts organic ranking for LATAM keywords. The trade-off: requires access to the main site's CMS.</p>
+
+    <h3>Option B — Subdomain</h3>
+    <p>Host at <code>latam.datalyzer.com</code>. Completely independent — can be built on any platform (HubSpot, Unbounce, Webflow) without touching the main site. Slightly weaker SEO than subdirectory, but much faster to launch and iterate.</p>
+
+    <h3>Option C — External Domain (Lowest Risk, Fastest Launch)</h3>
+    <p>Use the existing <code>datalyzer-verticales.vercel.app</code> or register <code>datalyzer-latam.com</code>. Full control. Ideal for A/B testing radical page variations. Potential SEO downside: builds authority on a separate domain. Can redirect to main site after testing proves conversion rates.</p>
+
+    <div class="callout">
+      <p><strong>Recommendation:</strong> Launch on Option C (existing project domain) immediately to test and prove the concept. Once conversion rates are validated (3–6 months), negotiate with the global Datalyzer team to migrate the top-performing page to a subdirectory on datalyzer.com for SEO compounding.</p>
+    </div>
+  </div>
+
+
+  <!-- ═══ 8. NEXT STEPS ═══ -->
+  <div class="section">
+    <h2>08 · Recommended Next Steps</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Pick one vertical and one country to pilot</h4>
+          <p>Suggested: Food & Beverage industry, Argentina. Smallest legal friction, largest TAM in LATAM, strongest existing case study potential.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Build the landing page (1 week)</h4>
+          <p>Use the anatomy from Section 04. A/B test two headlines. Set up UTM tracking from day one. Goal: 15%+ conversion rate before scaling.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Build the prospect list (1 week, parallel)</h4>
+          <p>Source 500 verified emails via Apollo or LinkedIn Sales Navigator. Quality Engineers + QA Managers + Plant Directors in Argentine food & pharma companies with 100–2,000 employees.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Configure sending infrastructure (2–3 days)</h4>
+          <p>Set up sending domain, warm it up for 2 weeks while building the list, configure SPF/DKIM/DMARC, validate list through ZeroBounce.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Launch 5-touch sequence (Week 3–4)</h4>
+          <p>Send Touch 1 to the 500 contacts. Monitor open rates daily. If open rate &lt;20%, test new subject lines before sending Touch 2. Track which email generated each landing page visit via UTM.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h4>Review, iterate, expand (Month 2+)</h4>
+          <p>Analyze results at the 30-day mark. Which subject lines performed? Which email touch drove the most conversions? Apply learnings before expanding to Colombia, Chile, or the Pharma vertical.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="doc-footer">
+    <span>Datalyzer LATAM — Growth Strategy · June 2026</span>
+    <span>Internal Use Only</span>
+  </div>
+
+</div>
+
+</body>
+</html>

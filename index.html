@@ -57,10 +57,21 @@
       <a href="#roi" class="nav-link">ROI</a>
       <a href="#contacto" class="nav-link">Contacto</a>
     </div>
-    <a href="#contacto" class="btn btn-ink btn-sm">
+    <a href="#contacto" class="btn btn-ink btn-sm nav-cta-desktop">
       Agendar demo
       <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
     </a>
+    <button class="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile">
+    <a href="#verticales" class="nav-link">Verticales</a>
+    <a href="#modulos" class="nav-link">Módulos</a>
+    <a href="#integraciones" class="nav-link">Integraciones</a>
+    <a href="#roi" class="nav-link">ROI</a>
+    <a href="#contacto" class="nav-link">Contacto</a>
+    <a href="#contacto" class="btn btn-ink btn-sm">Agendar demo →</a>
   </div>
 </nav>
 
@@ -435,7 +446,7 @@
       <div class="module-card is-core">
         <div class="module-tag">Core · SPC</div>
         <h3>Statistical Process Control</h3>
-        <p>Cartas de control X̄-R, CUSUM, EWMA. Detección automática de señales y análisis de capacidad en tiempo real — el núcleo de la plataforma.</p>
+        <p>Cartas de control X̄-R, X̄-S, p, np, c, u. Detección automática de señales y análisis de capacidad en tiempo real — el núcleo de la plataforma.</p>
         <div class="module-specs">
           <div class="module-spec">Cartas X̄-R, X̄-S, p, np, c, u</div>
           <div class="module-spec">Cpk · Ppk · Cm · Cmk</div>
@@ -569,7 +580,7 @@
       <h2 class="h-title">El producto, no el pitch.</h2>
       <p class="lead">Demo real del dashboard, control charts en vivo, FMEA y reportes auditables. Sin presentación de ventas.</p>
     </div>
-    <div class="videos fade-up" style="grid-template-columns: 1fr 1fr; grid-template-rows: auto auto;">
+    <div class="videos fade-up">
       <div class="video-card">
         <iframe src="https://www.youtube.com/embed/QEviu1-IJtU?start=67&rel=0&modestbranding=1" title="Datalyzer Qualis — Demo en vivo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         <span class="video-card-caption">Qualis SPC · Demo en vivo</span>
@@ -709,6 +720,11 @@
     <span>v2.0 · Built for plant managers</span>
   </div>
 </footer>
+
+<a href="#contacto" id="float-cta" class="float-cta">
+  Agendar demo
+  <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+</a>
 
 <script src="assets/js/charts.js"></script>
 <script src="assets/js/roi.js"></script>

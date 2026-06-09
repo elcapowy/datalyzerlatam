@@ -62,7 +62,7 @@
     aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.8', reviewCount: '218', bestRating: '5' },
     featureList: [
       'Control estadístico de procesos (SPC) en tiempo real',
-      'Cartas de control X̄-R, X̄-S, CUSUM, EWMA, p, np, c, u',
+      'Cartas de control X̄-R, X̄-S, p, np, c, u',
       'Análisis de capacidad Cpk, Ppk, Cm, Cmk',
       'FMEA de Diseño y Proceso (DFMEA / PFMEA)',
       'APQP y Control Plans',

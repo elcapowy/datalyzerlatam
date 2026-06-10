@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup Google Sheets — Datalyzer</title>
+<link rel="stylesheet" href="assets/css/tokens.css?v=3">
+<link rel="stylesheet" href="assets/css/app.css?v=3">
+<style>
+  .setup-wrap { max-width: 760px; margin: 0 auto; padding: 64px 24px 96px; }
+  .setup-header { margin-bottom: 56px; }
+  .setup-header h1 { font-size: var(--text-2xl); letter-spacing: -0.03em; margin: 12px 0 10px; }
+  .setup-header p { color: var(--ink-3); font-size: var(--text-md); }
+
+  /* Step cards */
+  .steps { display: flex; flex-direction: column; gap: 24px; }
+  .step { display: grid; grid-template-columns: 44px 1fr; gap: 20px; align-items: start; }
+  .step-num {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-weight: 700; font-size: 16px;
+    flex-shrink: 0; margin-top: 4px;
+  }
+  .step-body { display: flex; flex-direction: column; gap: 10px; }
+  .step-body h3 { font-size: var(--text-lg); font-weight: 600; letter-spacing: -0.02em; margin: 0; }
+  .step-body p { color: var(--ink-2); font-size: 14px; line-height: 1.6; margin: 0; }
+  .step-body a { color: var(--accent); }
+
+  /* Code block */
+  .code-block { position: relative; }
+  .code-block pre {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-x: auto;
+    margin: 0;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  .copy-btn {
+    position: absolute; top: 10px; right: 10px;
+    background: rgba(255,255,255,0.12); color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px; padding: 6px 12px;
+    font-family: var(--font-mono); font-size: 11px;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .copy-btn:hover { background: rgba(255,255,255,0.22); }
+  .copy-btn.copied { background: var(--accent); border-color: var(--accent); }
+
+  /* Config field */
+  .webhook-row { display: flex; gap: 10px; align-items: stretch; }
+  .webhook-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 11px 14px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .webhook-input:focus { border-color: var(--accent); }
+  .webhook-input::placeholder { color: var(--ink-4); }
+
+  /* Test result */
+  .test-result {
+    display: none;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  .test-result.ok  { background: var(--good-soft); color: var(--good); border: 1px solid color-mix(in oklab, var(--good) 25%, transparent); }
+  .test-result.err { background: var(--bad-soft);  color: var(--bad);  border: 1px solid color-mix(in oklab, var(--bad)  25%, transparent); }
+
+  /* Divider */
+  .step-divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 8px 0 8px 64px;
+  }
+
+  /* Note */
+  .note {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+  .note strong { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .step { grid-template-columns: 36px 1fr; gap: 14px; }
+    .step-num { width: 36px; height: 36px; font-size: 14px; }
+    .webhook-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <svg class="brand-logo" viewBox="0 0 70 52" width="34" height="25" fill="none" aria-hidden="true">
+        <line class="nl" x1="9" y1="41" x2="40" y2="28" stroke-width="3.5" stroke-linecap="round"/>
+        <line class="nl" x1="28" y1="8" x2="40" y2="28" stroke-width="3" stroke-linecap="round"/>
+        <line class="nl" x1="40" y1="28" x2="60" y2="14" stroke-width="2.5" stroke-linecap="round"/>
+        <circle class="na" cx="9" cy="41" r="11"/>
+        <circle class="nb" cx="28" cy="8" r="10"/>
+        <circle class="nm" cx="40" cy="28" r="12"/>
+        <circle class="ns" cx="60" cy="14" r="7"/>
+      </svg>
+      Datalyzer
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">← Volver al portal</a>
+    </div>
+  </div>
+</nav>
+
+<main class="setup-wrap">
+
+  <div class="setup-header">
+    <div class="eyebrow mono"><span class="pulse"></span> Integración</div>
+    <h1>Conectar formulario → Google Sheets</h1>
+    <p>Cada lead que complete el formulario se guarda automáticamente en tu hoja de cálculo antes de abrir Calendly.</p>
+  </div>
+
+  <div class="steps">
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Abrí tu Google Sheet</h3>
+        <p>
+          <a href="https://docs.google.com/spreadsheets/d/1ftqN88yXqxX7yrmlAfexK2F9fmYYcivM8q_Td0gNW_Y/edit" target="_blank" rel="noopener">
+            Abrí la hoja ↗
+          </a>
+          &nbsp;→ Menú <strong>Extensiones</strong> → <strong>Apps Script</strong>
+        </p>
+      </div>
+    </div>
+
+    <hr class="step-divider">
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Pegá el código del webhook</h3>
+        <p>Borrá todo el contenido del editor y pegá el siguiente código:</p>
+        <div class="code-block" id="codeBlock">
+          <pre id="scriptCode"></pre>
+          <button class="copy-btn" id="copyBtn" onclick="copyCode()">Copiar</button>
+        </div>
+      </div>
+    </div>
+
+    <hr class="step-divider">
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Deployá como Web App</h3>
+        <p>En el editor de Apps Script: <strong>Deploy</strong> → <strong>New deployment</strong></p>
+        <div class="note">
+          <strong>Configuración del deploy:</strong><br>
+          · Type: <strong>Web app</strong><br>
+          · Execute as: <strong>Me</strong><br>
+          · Who has access: <strong>Anyone</strong><br><br>
+          Autorizá los permisos cuando te los pida Google.<br>
+          Al final te aparece el <strong>Web app URL</strong> — copialo.
+        </div>
+      </div>
+    </div>
+
+    <hr class="step-divider">
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Configurá el webhook</h3>
+        <p>Pegá el URL de tu Apps Script y descargá el <code>config.js</code> actualizado:</p>
+        <div class="webhook-row">
+          <input
+            type="url"
+            class="webhook-input"
+            id="webhookInput"
+            placeholder="https://script.google.com/macros/s/XXXXXXXX/exec"
+          >
+          <button class="btn btn-primary" onclick="downloadConfig()">
+            Descargar config.js
+          </button>
+        </div>
+        <p style="margin-top:8px; font-size:13px; color:var(--ink-3)">
+          Reemplazá <code>site/assets/js/config.js</code> con el archivo descargado y redeploy en Vercel.
+        </p>
+      </div>
+    </div>
+
+    <hr class="step-divider">
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>Probá la conexión</h3>
+        <p>Enviá una fila de prueba a tu hoja para confirmar que todo funciona:</p>
+        <div class="webhook-row">
+          <input
+            type="url"
+            class="webhook-input"
+            id="testInput"
+            placeholder="https://script.google.com/macros/s/XXXXXXXX/exec"
+          >
+          <button class="btn btn-ghost" onclick="testWebhook()">
+            Enviar fila de prueba
+          </button>
+        </div>
+        <div class="test-result" id="testResult"></div>
+      </div>
+    </div>
+
+  </div><!-- /steps -->
+
+</main>
+
+<script>
+// ── Load Apps Script source from .gs file ──────────────────
+// Since we can't read .gs directly, we embed it here as a string
+var SCRIPT_CODE = `var SHEET_ID = '1ftqN88yXqxX7yrmlAfexK2F9fmYYcivM8q_Td0gNW_Y';
+var HEADERS  = ['Fecha y hora', 'Nombre', 'Email', 'Teléfono', 'Empresa', 'Vertical', 'URL de origen'];
+
+function doPost(e) {
+  try {
+    var ss    = SpreadsheetApp.openById(SHEET_ID);
+    var sheet = ss.getActiveSheet();
+
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(HEADERS);
+      var h = sheet.getRange(1, 1, 1, HEADERS.length);
+      h.setFontWeight('bold').setBackground('#e8f5e9').setFontColor('#1b5e20');
+      sheet.setFrozenRows(1);
+      sheet.getRange('D:D').setNumberFormat('@'); // Teléfono: texto plano
+    }
+
+    var data = JSON.parse(e.postData.contents);
+
+    var nextRow = sheet.getLastRow() + 1;
+    sheet.appendRow([
+      data.fecha    || new Date().toLocaleString('es-AR'),
+      data.nombre   || '',
+      data.email    || '',
+      data.tel      || '',
+      data.empresa  || '',
+      data.vertical || '',
+      data.url      || ''
+    ]);
+    sheet.getRange(nextRow, 4).setNumberFormat('@'); // Forzar texto en tel
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ ok: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ ok: false, error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet(e) {
+  return ContentService.createTextOutput('Datalyzer Leads Webhook · Activo ✓');
+}`;
+
+document.getElementById('scriptCode').textContent = SCRIPT_CODE;
+
+function copyCode() {
+  navigator.clipboard.writeText(SCRIPT_CODE).then(function() {
+    var btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'Copiar';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+function downloadConfig() {
+  var url = document.getElementById('webhookInput').value.trim();
+  if (!url) { alert('Pegá el URL de tu Apps Script primero.'); return; }
+  var content = `/* ============================================================
+   DATALYZER · CONFIG
+============================================================ */
+
+// Google Sheets webhook — Apps Script web app URL
+window.SHEET_WEBHOOK = '${url}';
+`;
+  var blob = new Blob([content], { type: 'text/javascript' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'config.js';
+  a.click();
+}
+
+function testWebhook() {
+  var url = document.getElementById('testInput').value.trim();
+  var result = document.getElementById('testResult');
+  if (!url) { alert('Pegá el URL de tu Apps Script primero.'); return; }
+
+  result.style.display = 'block';
+  result.className = 'test-result';
+  result.textContent = 'Enviando…';
+
+  fetch(url, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({
+      fecha:    new Date().toLocaleString('es-AR'),
+      nombre:   'TEST · Setup',
+      email:    'test@datalyzer.com',
+      tel:      '+54 11 0000 0000',
+      empresa:  'Datalyzer Setup Test',
+      vertical: 'setup',
+      url:      window.location.href
+    })
+  }).then(function() {
+    result.className = 'test-result ok';
+    result.textContent = '✓ Solicitud enviada. Verificá tu Google Sheet — debería aparecer una fila nueva con datos de prueba.';
+  }).catch(function(err) {
+    result.className = 'test-result err';
+    result.textContent = '✗ Error: ' + err.message;
+  });
+}
+
+// Sync both URL inputs
+['webhookInput', 'testInput'].forEach(function(id) {
+  document.getElementById(id).addEventListener('input', function() {
+    var other = id === 'webhookInput' ? 'testInput' : 'webhookInput';
+    document.getElementById(other).value = this.value;
+  });
+});
+</script>
+</body>
+</html>

@@ -175,6 +175,31 @@
       var tel     = fields.tel.el.value.trim();
       var empresa = (document.getElementById('cf-empresa') || {}).value || '';
 
+      // ── Google Sheets: fire-and-forget POST ──────────────
+      if (window.SHEET_WEBHOOK) {
+        try {
+          var payload = {
+            fecha:    new Date().toLocaleString('es-AR', {
+                        timeZone: 'America/Argentina/Buenos_Aires',
+                        day: '2-digit', month: '2-digit', year: 'numeric',
+                        hour: '2-digit', minute: '2-digit'
+                      }),
+            nombre:   nombre,
+            email:    email,
+            tel:      tel,
+            empresa:  empresa.trim(),
+            vertical: document.body.dataset.vertical || 'hub',
+            url:      window.location.href
+          };
+          fetch(window.SHEET_WEBHOOK, {
+            method:  'POST',
+            mode:    'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
+            body:    JSON.stringify(payload)
+          });
+        } catch (sheetErr) { /* fire and forget — no bloquea el flujo */ }
+      }
+
       var url = 'https://calendly.com/mwyler-datalyzer/30min'
         + '?name='  + encodeURIComponent(nombre)
         + '&email=' + encodeURIComponent(email)

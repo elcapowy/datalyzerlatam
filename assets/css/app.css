@@ -112,6 +112,24 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
 }
 [data-theme="dark"] .brand-mark { background: var(--ink); color: var(--bg); }
 
+/* ── Molecule logo SVG — accent-tinted per vertical ── */
+.brand-logo { display: block; flex-shrink: 0; overflow: visible; }
+.brand-logo .nl {
+  stroke: color-mix(in oklab, var(--accent) 38%, var(--ink-4));
+}
+.brand-logo .na {
+  fill: color-mix(in oklab, var(--accent) 68%, black);
+}
+.brand-logo .nb {
+  fill: color-mix(in oklab, var(--accent) 52%, white);
+}
+.brand-logo .nm {
+  fill: var(--accent);
+}
+.brand-logo .ns {
+  fill: color-mix(in oklab, var(--accent) 18%, oklch(0.62 0 0));
+}
+
 .nav-links { display: flex; align-items: center; gap: var(--space-7); }
 .nav-link { color: var(--ink-2); font-size: 14px; font-weight: 500; transition: color var(--t-fast); }
 .nav-link:hover { color: var(--ink); }
@@ -1222,6 +1240,8 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
 .cf-field { display: flex; flex-direction: column; gap: 7px; }
 
 .cf-field label {
+  display: block;
+  width: 100%;
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
@@ -1231,8 +1251,10 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
 }
 
 .cf-field input {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
+  display: block;
+  width: 100%;
+  background: rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.18);
   border-radius: var(--radius-sm);
   padding: 11px 14px;
   font-family: var(--font-sans);

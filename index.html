@@ -518,16 +518,18 @@
         <div class="roi-field">
           <label>Lotes producidos por mes</label>
           <div class="roi-input-wrap">
-            <input type="number" min="0" data-roi-batches value="40">
+            <input type="number" inputmode="numeric" data-roi-batches value="40">
             <span class="suffix">lotes/mes</span>
           </div>
+          <span class="roi-err" data-roi-err="batches"></span>
         </div>
         <div class="roi-field">
           <label>Valor promedio por lote</label>
           <div class="roi-input-wrap">
             <span class="prefix">USD</span>
-            <input type="number" min="0" data-roi-value value="40000">
+            <input type="number" inputmode="numeric" data-roi-value value="40000">
           </div>
+          <span class="roi-err" data-roi-err="value"></span>
         </div>
         <div class="roi-field">
           <label>Tasa de rechazo actual · <span data-roi-reject-out>12%</span></label>
@@ -609,7 +611,7 @@
 </section>
 
 <!-- ════════ COMPLIANCE STRIP ════════ -->
-<section class="section-tight">
+<section id="compliance" class="section-tight">
   <div class="shell">
     <div class="section-head fade-up">
       <div class="eyebrow"><span class="pulse"></span> Compliance</div>
@@ -666,8 +668,35 @@
           </div>
         </div>
       </div>
-      <div class="cta-calendly">
-        <div class="calendly-inline-widget" data-url="https://calendly.com/mwyler-datalyzer/30min?hide_gdpr_banner=1&primary_color=1a4fa0&text_color=1a1a1a&background_color=ffffff" style="min-width:280px;height:660px;"></div>
+      <div class="cta-form-wrap">
+        <form class="cta-form" id="contactForm" novalidate>
+          <div class="cf-row">
+            <div class="cf-field" id="ff-nombre">
+              <label for="cf-nombre">Nombre y apellido</label>
+              <input type="text" id="cf-nombre" name="nombre" placeholder="María González" autocomplete="name">
+              <span class="cf-err" id="err-nombre"></span>
+            </div>
+            <div class="cf-field" id="ff-tel">
+              <label for="cf-tel">Teléfono / WhatsApp</label>
+              <input type="tel" id="cf-tel" name="telefono" placeholder="+54 9 11 XXXX XXXX" autocomplete="tel">
+              <span class="cf-err" id="err-tel"></span>
+            </div>
+          </div>
+          <div class="cf-field" id="ff-email">
+            <label for="cf-email">Email corporativo</label>
+            <input type="email" id="cf-email" name="email" placeholder="maria@empresa.com" autocomplete="email">
+            <span class="cf-err" id="err-email"></span>
+          </div>
+          <div class="cf-field">
+            <label for="cf-empresa">Empresa</label>
+            <input type="text" id="cf-empresa" name="empresa" placeholder="Nombre de la empresa" autocomplete="organization">
+          </div>
+          <button type="submit" class="btn btn-primary cf-submit">
+            Agendar demo de 30 min
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+          <p class="cf-legal">Sin compromiso · La demo es técnica, no un pitch de ventas.</p>
+        </form>
       </div>
     </div>
   </div>
@@ -693,9 +722,9 @@
       <h4>Producto</h4>
       <a href="#integraciones">Integraciones</a>
       <a href="#roi">Calculadora de ROI</a>
-      <a href="#producto">Cobertura LATAM</a>
-      <a href="#">Compliance</a>
-      <a href="#">Documentación</a>
+      <a href="#argentina">Cobertura LATAM</a>
+      <a href="#compliance">Compliance</a>
+      <a href="https://www.datalyzer.com" target="_blank" rel="noopener noreferrer">datalyzer.com ↗</a>
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>

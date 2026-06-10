@@ -616,6 +616,72 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
 .case-quote cite strong { font-size: 13px; font-weight: 600; color: var(--ink); }
 .case-quote cite span { font-size: 12px; color: var(--ink-3); }
 .case-block > .btn { margin: 20px 28px; display: inline-flex; }
+
+/* ── Heineken case — full-bleed image section ── */
+.caso-heineken-section {
+  position: relative;
+  overflow: hidden;
+}
+.caso-heineken-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('../img/heineken-bg.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  z-index: 0;
+}
+.caso-heineken-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(0,8,2,0.82) 0%,
+    rgba(0,14,4,0.76) 55%,
+    rgba(0,0,0,0.88) 100%
+  );
+}
+.caso-heineken-shell {
+  position: relative;
+  z-index: 1;
+}
+.caso-heineken-section .section-head h2 { color: #fff; }
+.caso-heineken-section .section-head .lead { color: rgba(255,255,255,0.62); }
+.caso-heineken-section .eyebrow { color: var(--accent); }
+
+/* Dark case block — glass surface on image bg */
+.case-block--dark {
+  background: rgba(0,0,0,0.46);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-color: rgba(255,255,255,0.1);
+}
+.case-block--dark .case-metrics { border-color: rgba(255,255,255,0.08); }
+.case-block--dark .case-metric { border-color: rgba(255,255,255,0.08); }
+.case-block--dark .case-metric-lbl { color: rgba(255,255,255,0.44); }
+.case-block--dark .case-body { border-color: rgba(255,255,255,0.08); }
+.case-block--dark .case-challenge { border-color: rgba(255,255,255,0.08); }
+.case-block--dark .case-challenge h4,
+.case-block--dark .case-solution h4 { color: rgba(255,255,255,0.42); }
+.case-block--dark .case-challenge p,
+.case-block--dark .case-solution p { color: rgba(255,255,255,0.68); }
+.case-block--dark .case-quote { background: rgba(255,255,255,0.05); border-top: 1px solid rgba(255,255,255,0.08); }
+.case-block--dark .case-quote p { color: rgba(255,255,255,0.88); }
+.case-block--dark .case-quote cite strong { color: #fff; }
+.case-block--dark .case-quote cite span { color: rgba(255,255,255,0.42); }
+
+/* "Leer caso completo" — accent button remarcado */
+.case-read-btn {
+  margin: 20px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 20px var(--accent-ring);
+  letter-spacing: -0.01em;
+}
+.case-read-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px var(--accent-ring); }
+@media (max-width: 480px) { .case-read-btn { margin: 16px 18px; } }
 @media (max-width: 860px) {
   .case-metrics { grid-template-columns: repeat(2, 1fr); }
   .case-body { grid-template-columns: 1fr; }
@@ -1142,14 +1208,123 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
 .cta-meta-row a { color: rgba(255,255,255,0.6); margin-left: auto; font-size: 12px; font-family: var(--font-mono); text-decoration: none; }
 .cta-meta-row a:hover { color: #fff; }
 
-/* Calendly layout variant */
-.cta-block--calendly { grid-template-columns: 1fr 1.4fr; align-items: start; gap: 48px; }
+/* Calendly layout variant → custom form */
+.cta-block--calendly { grid-template-columns: 1fr 1fr; align-items: start; gap: 48px; }
 .cta-block--calendly .cta-copy { padding: 8px 0; }
-.cta-calendly { border-radius: 12px; overflow: hidden; background: #fff; flex-shrink: 0; }
-.cta-calendly .calendly-inline-widget { border: none; }
+
+/* ── Contact form (dark bg) ── */
+.cta-form-wrap { padding: 8px 0; }
+
+.cta-form { display: flex; flex-direction: column; gap: 16px; }
+
+.cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.cf-field { display: flex; flex-direction: column; gap: 7px; }
+
+.cf-field label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: rgba(255,255,255,0.45);
+}
+
+.cf-field input {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: #fff;
+  outline: none;
+  transition: border-color var(--t-fast), background var(--t-fast), box-shadow var(--t-fast);
+  width: 100%;
+}
+.cf-field input::placeholder { color: rgba(255,255,255,0.22); }
+.cf-field input:focus {
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.09);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.06);
+}
+
+/* Error state */
+.cf-field.has-error input {
+  border-color: oklch(0.65 0.2 25);
+  background: rgba(200,40,40,0.08);
+}
+.cf-field.has-error input:focus {
+  box-shadow: 0 0 0 3px oklch(0.65 0.2 25 / 0.18);
+}
+/* Valid state */
+.cf-field.is-valid input {
+  border-color: rgba(255,255,255,0.28);
+}
+
+.cf-err {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: oklch(0.72 0.18 25);
+  min-height: 14px;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.cf-err:not(:empty)::before {
+  content: "▲";
+  font-size: 8px;
+  flex-shrink: 0;
+}
+
+.cf-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 14px 20px;
+  font-size: 15px;
+  border-radius: var(--radius-md);
+  margin-top: 4px;
+}
+
+.cf-legal {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255,255,255,0.28);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+/* ── ROI inline errors ── */
+.roi-err {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--bad);
+  min-height: 14px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.02em;
+}
+.roi-err:not(:empty)::before { content: "▲"; font-size: 8px; flex-shrink: 0; }
+
+.roi-input-wrap.has-error {
+  border-color: var(--bad);
+  background: var(--bad-soft);
+}
+.roi-input-wrap.has-error:focus-within { border-color: var(--bad); }
+
+/* hide native number spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+
 @media (max-width: 900px) {
   .cta-block--calendly { grid-template-columns: 1fr; gap: 32px; }
-  .cta-calendly .calendly-inline-widget { height: 580px !important; }
+}
+@media (max-width: 600px) {
+  .cf-row { grid-template-columns: 1fr; }
 }
 
 /* ============================================================

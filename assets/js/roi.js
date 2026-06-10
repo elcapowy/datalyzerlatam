@@ -1,6 +1,7 @@
 /* ============================================================
    DATALYZER · ROI CALCULATOR
    Computes annual savings + payback from form inputs.
+   Custom inline validation — no native HTML5 popups.
 ============================================================ */
 
 (function () {
@@ -10,11 +11,9 @@
     if (Math.abs(v) >= 1e3) return Math.round(v / 1e3).toLocaleString("es-AR") + "k";
     return Math.round(v).toLocaleString("es-AR");
   }
-  function fmtPct(v) { return (v * 100).toFixed(0) + "%"; }
 
   function initROI(root) {
     const vertical = root.dataset.vertical || "default";
-    // Per-vertical defaults (reduction targets and value-per-batch baseline)
     const presets = {
       alimentos:    { rejectFrom: 0.20, rejectTo: 0.05, exportLift: 0.35, batchValue: 18000 },
       quimicos:     { rejectFrom: 0.10, rejectTo: 0.02, exportLift: 0.25, batchValue: 55000 },
@@ -27,53 +26,91 @@
     const cfg = presets[vertical] || presets.default;
 
     const get = (sel) => root.querySelector(sel);
-    const batchEl = get("[data-roi-batches]");
-    const valueEl = get("[data-roi-value]");
-    const rejectEl = get("[data-roi-reject]");
+    const batchEl   = get("[data-roi-batches]");
+    const valueEl   = get("[data-roi-value]");
+    const rejectEl  = get("[data-roi-reject]");
     const rejectOut = get("[data-roi-reject-out]");
 
-    const outSavings = get("[data-roi-savings]");
+    const outSavings   = get("[data-roi-savings]");
     const outRecovered = get("[data-roi-recovered]");
-    const outExport = get("[data-roi-export]");
-    const outPayback = get("[data-roi-payback]");
+    const outExport    = get("[data-roi-export]");
+    const outPayback   = get("[data-roi-payback]");
+
+    const batchErrEl = get('[data-roi-err="batches"]');
+    const valueErrEl = get('[data-roi-err="value"]');
 
     // Set defaults from preset
     if (rejectEl) {
       rejectEl.value = Math.round(cfg.rejectFrom * 100);
-      rejectOut && (rejectOut.textContent = rejectEl.value + "%");
+      if (rejectOut) rejectOut.textContent = rejectEl.value + "%";
     }
     if (valueEl && !valueEl.value) valueEl.value = cfg.batchValue;
     if (batchEl && !batchEl.value) batchEl.value = 40;
 
-    function recompute() {
-      const batches = Math.max(0, parseFloat(batchEl?.value || 0));   // per month
-      const value = Math.max(0, parseFloat(valueEl?.value || 0));     // per batch in USD
-      const rejectFromPct = Math.max(0, parseFloat(rejectEl?.value || 0)) / 100;
-      const rejectFrom = Math.max(rejectFromPct, cfg.rejectTo);
-
-      const monthlyOutput = batches * value;
-      const annualOutput = monthlyOutput * 12;
-
-      const recoveredAnnual = annualOutput * (rejectFrom - cfg.rejectTo);
-      const exportLiftAnnual = annualOutput * cfg.exportLift * 0.35; // conservative
-      const savingsAnnual = recoveredAnnual + exportLiftAnnual;
-
-      // Cost assumption (license) — illustrative
-      const yearlyLicense = 18000;
-      const paybackMonths = savingsAnnual > 0 ? (yearlyLicense / (savingsAnnual / 12)) : Infinity;
-
-      outSavings && (outSavings.textContent = "$" + fmtCurrency(savingsAnnual));
-      outRecovered && (outRecovered.textContent = "$" + fmtCurrency(recoveredAnnual));
-      outExport && (outExport.textContent = "$" + fmtCurrency(exportLiftAnnual));
-      outPayback && (outPayback.textContent = paybackMonths > 36 ? "—" : paybackMonths.toFixed(1) + " m");
-
-      if (rejectOut) rejectOut.textContent = Math.round(rejectFromPct * 100) + "%";
+    /* ── Inline validation helpers ── */
+    function setFieldError(inputEl, errEl, msg) {
+      const wrap = inputEl ? inputEl.closest(".roi-input-wrap") : null;
+      if (wrap) wrap.classList.toggle("has-error", !!msg);
+      if (errEl) errEl.textContent = msg || "";
     }
 
-    [batchEl, valueEl, rejectEl].forEach(el => {
+    function validateBatches(raw) {
+      if (raw === "" || raw === null) return "Ingresá la cantidad de lotes";
+      const n = parseFloat(raw);
+      if (isNaN(n))  return "Ingresá un número válido";
+      if (n < 0)     return "El valor debe ser mayor a 0";
+      return null;
+    }
+
+    function validateValue(raw) {
+      if (raw === "" || raw === null) return "Ingresá el valor del lote";
+      const n = parseFloat(raw);
+      if (isNaN(n))  return "Ingresá un número válido";
+      if (n < 0)     return "El valor debe ser mayor a 0";
+      return null;
+    }
+
+    function recompute() {
+      const batchRaw  = batchEl  ? batchEl.value  : "";
+      const valueRaw  = valueEl  ? valueEl.value  : "";
+
+      const batchErr = validateBatches(batchRaw);
+      const valueErr = validateValue(valueRaw);
+
+      setFieldError(batchEl, batchErrEl, batchErr);
+      setFieldError(valueEl, valueErrEl, valueErr);
+
+      // Always compute — clamp negatives to 0 silently
+      const batches = Math.max(0, parseFloat(batchRaw) || 0);
+      const value   = Math.max(0, parseFloat(valueRaw) || 0);
+      const rejectFromPct = Math.max(0, parseFloat(rejectEl ? rejectEl.value : 0)) / 100;
+      const rejectFrom    = Math.max(rejectFromPct, cfg.rejectTo);
+
+      const annualOutput     = batches * value * 12;
+      const recoveredAnnual  = annualOutput * (rejectFrom - cfg.rejectTo);
+      const exportLiftAnnual = annualOutput * cfg.exportLift * 0.35;
+      const savingsAnnual    = recoveredAnnual + exportLiftAnnual;
+
+      const yearlyLicense  = 18000;
+      const paybackMonths  = savingsAnnual > 0
+        ? (yearlyLicense / (savingsAnnual / 12))
+        : Infinity;
+
+      if (outSavings)   outSavings.textContent   = "$" + fmtCurrency(savingsAnnual);
+      if (outRecovered) outRecovered.textContent = "$" + fmtCurrency(recoveredAnnual);
+      if (outExport)    outExport.textContent    = "$" + fmtCurrency(exportLiftAnnual);
+      if (outPayback)   outPayback.textContent   = paybackMonths > 36 ? "—" : paybackMonths.toFixed(1) + " m";
+      if (rejectOut)    rejectOut.textContent    = Math.round(rejectFromPct * 100) + "%";
+    }
+
+    // Validate on blur; recompute on every input
+    [batchEl, valueEl].forEach(el => {
       if (!el) return;
       el.addEventListener("input", recompute);
+      el.addEventListener("blur",  recompute);
     });
+    if (rejectEl) rejectEl.addEventListener("input", recompute);
+
     recompute();
   }
 

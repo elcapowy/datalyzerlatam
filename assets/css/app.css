@@ -1139,6 +1139,18 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
 }
 .cta-meta-row svg { color: var(--accent); flex-shrink: 0; }
 .cta-meta-row .mono { color: rgba(255,255,255,0.6); margin-left: auto; font-size: 12px; }
+.cta-meta-row a { color: rgba(255,255,255,0.6); margin-left: auto; font-size: 12px; font-family: var(--font-mono); text-decoration: none; }
+.cta-meta-row a:hover { color: #fff; }
+
+/* Calendly layout variant */
+.cta-block--calendly { grid-template-columns: 1fr 1.4fr; align-items: start; gap: 48px; }
+.cta-block--calendly .cta-copy { padding: 8px 0; }
+.cta-calendly { border-radius: 12px; overflow: hidden; background: #fff; flex-shrink: 0; }
+.cta-calendly .calendly-inline-widget { border: none; }
+@media (max-width: 900px) {
+  .cta-block--calendly { grid-template-columns: 1fr; gap: 32px; }
+  .cta-calendly .calendly-inline-widget { height: 580px !important; }
+}
 
 /* ============================================================
    FOOTER
@@ -1965,5 +1977,8 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
 /* ============================================================
    FADE-IN
 ============================================================ */
-.fade-up { opacity: 0; transform: translateY(14px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
-.fade-up.is-in { opacity: 1; transform: translateY(0); }
+/* fade-up: visible by default; JS adds .js-ready to body to enable animation */
+.fade-up { opacity: 1; transform: none; }
+.js-ready .fade-up { opacity: 0; transform: translateY(14px); transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out); }
+.js-ready .fade-up.is-in { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .js-ready .fade-up, .js-ready .fade-up.is-in { opacity: 1; transform: none; transition: none; } }

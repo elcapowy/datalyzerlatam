@@ -18,6 +18,7 @@
 <meta name="twitter:title" content="Software SPC Industria Química Argentina | Datalyzer">
 <meta name="twitter:description" content="SPC para industria química. REACH, GHS, ISO 9001. Representante oficial Datalyzer Argentina.">
 <meta name="twitter:image" content="https://datalyzer-verticales.vercel.app/assets/img/quimicos.jpg">
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/app.css">
 <script src="assets/js/seo.js" defer></script>
@@ -36,7 +37,7 @@
   </div>
   <div class="nav-mobile">
     <a href="index.html" class="nav-link">← Volver al portal</a>
-    <a href="#contacto" class="btn btn-primary btn-sm">Agendar demo →</a>
+    <button onclick="Calendly.initPopupWidget({url:'https://calendly.com/mwyler-datalyzer/30min'});return false;" class="btn btn-primary btn-sm">Agendar demo →</button>
   </div>
 </nav>
 
@@ -190,6 +191,8 @@
 <a href="#contacto" id="float-cta" class="float-cta">Agendar demo <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
 
 <script src="assets/js/charts.js"></script>
-<script src="assets/js/tweaks.js"></script>
+<script src="assets/js/roi.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </body>
 </html>

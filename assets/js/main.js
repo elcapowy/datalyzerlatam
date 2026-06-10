@@ -6,17 +6,39 @@
 (function () {
   // Fade-up on scroll
   function initFadeUp() {
-    const els = document.querySelectorAll(".fade-up");
+    // Enable animation only when JS is running (prevents invisible content in static renderers)
+    document.body.classList.add('js-ready');
+
+    var els = document.querySelectorAll('.fade-up');
     if (!els.length) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
+
+    // Immediately reveal elements already visible in the viewport
+    function revealVisible() {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      els.forEach(function(el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < vh && r.bottom > 0) el.classList.add('is-in');
+      });
+    }
+
+    // Run immediately + after layout settles
+    requestAnimationFrame(function() {
+      revealVisible();
+      setTimeout(revealVisible, 120);
+    });
+
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
         if (e.isIntersecting) {
-          e.target.classList.add("is-in");
+          e.target.classList.add('is-in');
           io.unobserve(e.target);
         }
       });
-    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.05 });
-    els.forEach(el => io.observe(el));
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.04 });
+
+    els.forEach(function(el) {
+      if (!el.classList.contains('is-in')) io.observe(el);
+    });
   }
 
   // Tabs (dash-tabs)
